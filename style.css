@@ -1,0 +1,22 @@
+/* 
+Color Palette:
+1. #1d3557 - Dark Blue (Background)
+2. #407ba7 - Medium Blue
+3. #9dcee2 - Light Blue
+4. #fedfd4 - Beige
+6. #ffffff - White
+5. #e63946 - Red
+*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  background-color: #1d3557;
+  color: #ffffff;
+  line-height: 1.6;
+}
