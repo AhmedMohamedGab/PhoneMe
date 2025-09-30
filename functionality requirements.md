@@ -1,4 +1,4 @@
-- Get total
+- Get total -> DONE
 - Create product
 - Save local storage
 - Clear inputs

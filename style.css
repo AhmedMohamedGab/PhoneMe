@@ -19,6 +19,7 @@ body {
   background-color: #1d3557;
   color: #ffffff;
   line-height: 1.6;
+  letter-spacing: 0.75px;
 }
 
 header {
@@ -82,15 +83,19 @@ main {
   background-color: #407ba7;
   border: none;
   color: #ffffff;
-  /* width: 100%;
-  height: 100%; */
-  padding: 16px;
-  font-size: 1.125rem;
+  width: 100%;
+  height: 58px;
+  padding: 8px 4px;
+  font-size: 0.85rem;
   font-weight: bold;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: default;
+}
+
+.btn {
+  letter-spacing: 0.75px;
 }
 
 #create-btn,
@@ -100,7 +105,7 @@ main {
   border: none;
   border-radius: 20px;
   color: #ffffff;
-  font-size: 1.125rem;
+  /* font-size: 1.125rem; */
   font-weight: bold;
   transition: 0.25s;
 }
@@ -176,6 +181,7 @@ main {
   border: none;
   border-radius: 20px;
   color: #ffffff;
+  font-size: 0.85rem;
   font-weight: bold;
   transition: 0.25s;
 }
@@ -207,6 +213,12 @@ footer p {
 footer a {
   text-decoration: none;
   color: #1d3557;
+}
+
+@media (max-width: 884px) {
+  .row {
+    gap: 4px;
+  }
 }
 
 @media (max-width: 768px) {

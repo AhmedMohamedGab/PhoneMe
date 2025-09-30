@@ -19,7 +19,7 @@
     <main class="text-center">
         <form class="mb-4" id="input-form" action="index.html" method="POST">
             <legend class="btn btn-primary" id="create-legend">Add and Update Products</legend>
-            <div class="row g-2 mb-2">
+            <div class="row g-2 mb-2" id="info-boxes">
                 <div class="col-md">
                     <div class="form-floating">
                         <input class="form-control" type="text" id="product-name" placeholder="Product Name" required>
@@ -40,33 +40,37 @@
                 </div>
             </div>
 
-            <div class="row g-2 mb-3">
+            <div class="row g-2 mb-3" id="price-boxes">
                 <div class="col-md">
                     <div class="form-floating">
-                        <input min="1" class="form-control" type="number" id="price" placeholder="Price" required>
+                        <input onkeyup="getTotal()" onclick="getTotal()" min="1" class="form-control" type="number"
+                            id="price" placeholder="Price" required>
                         <label for="price">Price</label>
                     </div>
                 </div>
                 <div class="col-md">
                     <div class="form-floating">
-                        <input min="0" class="form-control" type="number" id="tax" placeholder="Tax" required>
+                        <input onkeyup="getTotal()" onclick="getTotal()" min="0" class="form-control" type="number"
+                            id="tax" placeholder="Tax" required>
                         <label for="tax">Tax</label>
                     </div>
                 </div>
                 <div class="col-md">
                     <div class="form-floating">
-                        <input min="0" class="form-control" type="number" id="ads" placeholder="Ads" required>
+                        <input onkeyup="getTotal()" onclick="getTotal()" min="0" class="form-control" type="number"
+                            id="ads" placeholder="Ads" required>
                         <label for="ads">Ads</label>
                     </div>
                 </div>
                 <div class="col-md">
                     <div class="form-floating">
-                        <input min="0" class="form-control" type="number" id="discount" placeholder="Discount">
+                        <input onkeyup="getTotal()" onclick="getTotal()" min="0" class="form-control" type="number"
+                            id="discount" placeholder="Discount">
                         <label for="discount">Discount</label>
                     </div>
                 </div>
                 <div class="col-md">
-                    <div class="btn btn-warning" id="total">Total : </div>
+                    <div class="btn btn-warning" id="total">Total : 0</div>
                 </div>
             </div>
             <div class="d-grid gap-2 col-6 mx-auto">
