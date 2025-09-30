@@ -1,0 +1,10 @@
+- Get total
+- Create product
+- Save local storage
+- Clear inputs
+- Read data
+- Manage count
+- Delete products
+- Update products
+- Search products
+- Check data integrity
