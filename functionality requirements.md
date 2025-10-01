@@ -1,7 +1,7 @@
 - Get total -> DONE
-- Create product
-- Save local storage
-- Clear inputs
+- Create product -> DONE
+- Save local storage -> DONE
+- Clear inputs -> DONE
 - Read data
 - Manage count
 - Delete products

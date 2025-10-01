@@ -79,6 +79,10 @@ main {
   transform: scale(1.08, 1.15);
 }
 
+#total::before {
+  content: "Total : ";
+}
+
 #total {
   background-color: #407ba7;
   border: none;
