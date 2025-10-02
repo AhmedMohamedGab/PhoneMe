@@ -3,8 +3,10 @@
 - Save local storage -> DONE
 - Clear inputs -> DONE
 - Read data -> DONE
-- Delete products
-- Manage count
+- Remove product -> DONE
+- Delete product item -> DONE
+- Manage count -> DONE
+- Delete all products
 - Update products
 - Search products
 - Check data integrity

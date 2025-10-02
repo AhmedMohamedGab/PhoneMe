@@ -90,12 +90,12 @@ function clearInputs() {
 // get existing products from productData array and display them in the products table
 
 function constructTable() {
-    let tableRow = '';  // a variable to store existing products in a table row one at a time
+    let table = '';  // a variable to store existing products in a table
     for (let index = 0; index < productData.length; index++) {
-        // for each product in the productData array -> tableRow variable stores a table row having product details
-        tableRow = `
+        // table variable stores a table having product details
+        table += `
             <tr>
-                <td>${index}</td>
+                <td>${index + 1}</td>
                 <td>${productData[index].productName}</td>
                 <td>${productData[index].category}</td>
                 <td>${productData[index].count}</td>
@@ -105,12 +105,12 @@ function constructTable() {
                 <td>${productData[index].discount}</td>
                 <td>${productData[index].total}</td>
                 <td><button class="btn btn-primary update-btn">Update</button></td>
-                <td><button class="btn btn-danger delete-btn">Delete Item</button></td>
-                <td><button class="btn btn-danger delete-btn">Remove Product</button></td>
+                <td><button class="btn btn-danger delete-btn" onclick="deleteItem(${index})">Delete Item</button></td>
+                <td><button class="btn btn-danger delete-btn" onclick="removeProduct(${index})">Remove Product</button></td>
             </tr>
-            `;
-        productTableBody.innerHTML += tableRow; // append the table row to the table
+        `;
     }
+    productTableBody.innerHTML = table; // display the table in HTML
 }
 
 // Read data of new product and add it to the products table
@@ -129,9 +129,30 @@ function addProduct(newProduct) {
             <td>${newProduct.discount}</td>
             <td>${newProduct.total}</td>
             <td><button class="btn btn-primary update-btn">Update</button></td>
-            <td><button class="btn btn-danger delete-btn">Delete Item</button></td>
-            <td><button class="btn btn-danger delete-btn">Remove Product</button></td>
+            <td><button class="btn btn-danger delete-btn" onclick="deleteItem(${productData.length - 1})">Delete Item</button></td>
+            <td><button class="btn btn-danger delete-btn" onclick="removeProduct(${productData.length - 1})">Remove Product</button></td>
         </tr>
-        `;
-    productTableBody.innerHTML += tableRow; // append the table row to the table
+    `;
+    productTableBody.innerHTML += tableRow; // append the table row to the products table
+}
+
+// remove product from products table (delete all product items)
+
+function removeProduct(productIndex) {
+    productData.splice(productIndex, 1);    // remove product from the productData array
+    localStorage.productData = JSON.stringify(productData); // update local storage with the new array
+    constructTable();   // refresh the products table
+}
+
+// delete a single item of a product (delete a single instance of the product)
+
+function deleteItem(productIndex) {
+    // if the product has just one item -> remove the product
+    if (productData[productIndex].count == 1) {
+        removeProduct(productIndex);
+    } else {
+        productData[productIndex].count--;  // decrement number of items of the product
+        localStorage.productData = JSON.stringify(productData); // update local storage with the new array
+        constructTable();   // refresh the products table
+    }
 }
