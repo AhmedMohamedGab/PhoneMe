@@ -119,8 +119,11 @@ main {
 }
 
 #delete-all-btn {
-  /* display: none; */
   background-color: #e63946;
+}
+
+.hide {
+  display: none;
 }
 
 #create-btn:hover,
@@ -173,15 +176,17 @@ main {
 .table th {
   background-color: #407ba7;
   color: #1d3557;
+  white-space: nowrap;
 }
 
 .table td {
   background-color: #1d3557;
   color: #ffffff;
+  white-space: nowrap;
 }
 
-#update-btn,
-#delete-btn {
+.update-btn,
+.delete-btn {
   border: none;
   border-radius: 20px;
   color: #ffffff;
@@ -190,17 +195,21 @@ main {
   transition: 0.25s;
 }
 
-#update-btn {
+.update-btn {
   background-color: #407ba7;
 }
 
-#delete-btn {
+.delete-btn {
   background-color: #e63946;
 }
 
-#update-btn:hover,
-#delete-btn:hover {
+.update-btn:hover {
   transform: scale(1.1);
+  background-color: #407ba7;
+}
+.delete-btn:hover {
+  transform: scale(1.1);
+  background-color: #e63946;
 }
 
 footer {

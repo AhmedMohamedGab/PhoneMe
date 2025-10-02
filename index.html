@@ -91,7 +91,7 @@
                 </select>
             </div>
             <div class="d-grid gap-2 col-6 mx-auto">
-                <input class="btn btn-danger" type="submit" id="delete-all-btn" value="Delete All">
+                <input class="btn btn-danger hide" type="button" id="delete-all-btn" value="Delete All">
             </div>
         </form>
 
@@ -102,30 +102,20 @@
                         <th>ID</th>
                         <th>Product</th>
                         <th>Category</th>
+                        <th>Count</th>
                         <th>Price</th>
                         <th>Tax</th>
                         <th>Ads</th>
                         <th>Discount</th>
                         <th>Total</th>
                         <th>Update</th>
-                        <th>Delete</th>
+                        <th>Delete Item</th>
+                        <th>Remove Product</th>
                     </tr>
                 </thead>
 
                 <tbody id="product-table-body">
                     <!-- Product rows will be dynamically added here -->
-                    <tr>
-                        <td>1</td>
-                        <td>Dell G7</td>
-                        <td>Laptop</td>
-                        <td>100</td>
-                        <td>10</td>
-                        <td>5</td>
-                        <td>15</td>
-                        <td>100</td>
-                        <td><button class="btn btn-primary" id="update-btn">Update</button></td>
-                        <td><button class="btn btn-danger" id="delete-btn">Delete</button></td>
-                    </tr>
                 </tbody>
             </table>
         </div>

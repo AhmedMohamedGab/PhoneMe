@@ -2,9 +2,9 @@
 - Create product -> DONE
 - Save local storage -> DONE
 - Clear inputs -> DONE
-- Read data
-- Manage count
+- Read data -> DONE
 - Delete products
+- Manage count
 - Update products
 - Search products
 - Check data integrity
