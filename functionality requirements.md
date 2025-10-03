@@ -6,7 +6,7 @@
 - Remove product -> DONE
 - Delete product item -> DONE
 - Manage count -> DONE
-- Delete all products
+- Delete all products -> DONE
 - Update products
 - Search products
 - Check data integrity

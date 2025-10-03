@@ -16,13 +16,10 @@ let productTableBody = document.getElementById('product-table-body');
 
 let productData = [];   // array to hold products
 // if local storage already has products ->
-if (localStorage.getItem('productData')) {
+if (localStorage.getItem('productData') != null && localStorage.getItem('productData') != '') {
     // add existing products to the productData array
     productData = JSON.parse(localStorage.getItem('productData'));
-    // display existing products in the products table
-    constructTable();
-    // show the delete all button
-    deleteAllBtn.classList.remove('hide');
+    constructTable();   // display existing products in the products table
 }
 
 // get total price of products and display it if valid
@@ -61,6 +58,10 @@ function createProduct() {
         discount: discount.value,
         total: total.innerHTML
     }
+    // if invalid count -> count = 1
+    if (newProduct.count <= 0) {
+        newProduct.count = 1;
+    }
     // add the new product to the productData array (array that holds all products)
     productData.push(newProduct);
     // copy the productData array to local storage
@@ -69,8 +70,6 @@ function createProduct() {
     addProduct(newProduct);
     // clear input fields after user clicks the create button
     clearInputs();
-    // there is at least one product now, so show the delete all button
-    deleteAllBtn.classList.remove('hide');
 }
 
 // clear input fields after user clicks the create button
@@ -111,6 +110,14 @@ function constructTable() {
         `;
     }
     productTableBody.innerHTML = table; // display the table in HTML
+    // if there is any products ->
+    if (productData.length > 0) {
+        deleteAllBtn.classList.remove('hide');  // show the delete all button
+        // show number of products on the delete all button
+        deleteAllBtn.value = `Delete All ( ${productData.length} )`;
+    } else {
+        deleteAllBtn.classList.add('hide');  // hide the delete all button
+    }
 }
 
 // Read data of new product and add it to the products table
@@ -134,6 +141,9 @@ function addProduct(newProduct) {
         </tr>
     `;
     productTableBody.innerHTML += tableRow; // append the table row to the products table
+    deleteAllBtn.classList.remove('hide');  // show the delete all button
+    // show number of products on the delete all button
+    deleteAllBtn.value = `Delete All ( ${productData.length} )`;
 }
 
 // remove product from products table (delete all product items)
@@ -155,4 +165,13 @@ function deleteItem(productIndex) {
         localStorage.productData = JSON.stringify(productData); // update local storage with the new array
         constructTable();   // refresh the products table
     }
+}
+
+// delete all products in the table
+
+function deleteAll() {
+    productData = [];    // remove all products from the productData array
+    localStorage.productData = ''; // remove all products from local storage
+    deleteAllBtn.classList.add('hide');  // hide the delete all button
+    productTableBody.innerHTML = '';    // empty the products table
 }
