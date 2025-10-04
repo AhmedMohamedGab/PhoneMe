@@ -8,5 +8,5 @@
 - Manage count -> DONE
 - Delete all products -> DONE
 - Update products -> DONE
-- Search products
+- Search products -> DONE
 - Check data integrity

@@ -82,12 +82,12 @@
             <legend class="btn btn-primary" id="search-legend">Search Products</legend>
             <div class="input-group mb-3">
                 <div class="form-floating">
-                    <input class="form-control" type="search" id="search" placeholder="Search">
+                    <input class="form-control" type="text" id="search" onkeyup="searchProducts()" placeholder="Search">
                     <label for="search">Search</label>
                 </div>
-                <select class="input-group-text btn btn-outline-light" id="search-by">
-                    <option value="1">Search by Product</option>
-                    <option value="2">Search by Category</option>
+                <select class="input-group-text btn btn-outline-light" id="search-by" onclick="searchProducts()">
+                    <option value="by product">Search by Product</option>
+                    <option value="by category">Search by Category</option>
                 </select>
             </div>
             <div class="d-grid gap-2 col-6 mx-auto">
