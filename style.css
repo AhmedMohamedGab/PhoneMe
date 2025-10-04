@@ -185,7 +185,7 @@ main {
   white-space: nowrap;
 }
 
-.update-btn,
+.edit-btn,
 .delete-btn {
   border: none;
   border-radius: 20px;
@@ -195,7 +195,7 @@ main {
   transition: 0.25s;
 }
 
-.update-btn {
+.edit-btn {
   background-color: #407ba7;
 }
 
@@ -203,7 +203,7 @@ main {
   background-color: #e63946;
 }
 
-.update-btn:hover {
+.edit-btn:hover {
   transform: scale(1.1);
   background-color: #407ba7;
 }

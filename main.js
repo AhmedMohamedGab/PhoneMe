@@ -15,6 +15,8 @@ let productTableBody = document.getElementById('product-table-body');
 // initializations
 
 let productData = [];   // array to hold products
+let mode = 'create';    // initial value of mode (available modes are create and update)
+let savedIndex = 0; // a variable to save products indexes to access them in the productData array
 // if local storage already has products ->
 if (localStorage.getItem('productData') != null && localStorage.getItem('productData') != '') {
     // add existing products to the productData array
@@ -22,7 +24,7 @@ if (localStorage.getItem('productData') != null && localStorage.getItem('product
     constructTable();   // display existing products in the products table
 }
 
-// get total price of products and display it if valid
+// get total price of the product and display it if valid
 
 function getTotal() {
     // if no price entered -> no total will be calculated
@@ -62,19 +64,24 @@ function createProduct() {
     if (newProduct.count <= 0) {
         newProduct.count = 1;
     }
-    // add the new product to the productData array (array that holds all products)
-    productData.push(newProduct);
-    // copy the productData array to local storage
-    localStorage.setItem('productData', JSON.stringify(productData));
-    // display the new product in products table
-    addProduct(newProduct);
-    // clear input fields after user clicks the create button
-    clearInputs();
+    // if user in create mode ->
+    if (mode === 'create') {
+        // add the new product to the productData array (array that holds all products)
+        productData.push(newProduct);
+    } else {
+        // user in update mode ->
+        // replace old product in the productData array with updated product
+        productData[savedIndex] = newProduct;
+    }
+    localStorage.setItem('productData', JSON.stringify(productData));   // copy the productData array to local storage
+    constructTable();   // refresh the products table
+    clearInputs();  // clear input fields after user clicks the create button
 }
 
 // clear input fields after user clicks the create button
 
 function clearInputs() {
+    // clear input fields
     productName.value = ''
     category.value = ''
     count.value = ''
@@ -82,8 +89,11 @@ function clearInputs() {
     tax.value = ''
     ads.value = ''
     discount.value = ''
+    // reset total box value and color
     total.innerHTML = '0'
     total.style.background = "#407ba7";
+    mode = 'create';    // reset mode to create
+    createBtn.value = 'Create'; // reset create button
 }
 
 // get existing products from productData array and display them in the products table
@@ -103,7 +113,7 @@ function constructTable() {
                 <td>${productData[index].ads}</td>
                 <td>${productData[index].discount}</td>
                 <td>${productData[index].total}</td>
-                <td><button class="btn btn-primary update-btn">Update</button></td>
+                <td><button class="btn btn-primary edit-btn" onclick="editProduct(${index})">Edit</button></td>
                 <td><button class="btn btn-danger delete-btn" onclick="deleteItem(${index})">Delete Item</button></td>
                 <td><button class="btn btn-danger delete-btn" onclick="removeProduct(${index})">Remove Product</button></td>
             </tr>
@@ -118,32 +128,6 @@ function constructTable() {
     } else {
         deleteAllBtn.classList.add('hide');  // hide the delete all button
     }
-}
-
-// Read data of new product and add it to the products table
-
-function addProduct(newProduct) {
-    // tableRow variable stores a table row having new product details
-    let tableRow = `
-        <tr>
-            <td>${productData.length}</td>
-            <td>${newProduct.productName}</td>
-            <td>${newProduct.category}</td>
-            <td>${newProduct.count}</td>
-            <td>${newProduct.price}</td>
-            <td>${newProduct.tax}</td>
-            <td>${newProduct.ads}</td>
-            <td>${newProduct.discount}</td>
-            <td>${newProduct.total}</td>
-            <td><button class="btn btn-primary update-btn">Update</button></td>
-            <td><button class="btn btn-danger delete-btn" onclick="deleteItem(${productData.length - 1})">Delete Item</button></td>
-            <td><button class="btn btn-danger delete-btn" onclick="removeProduct(${productData.length - 1})">Remove Product</button></td>
-        </tr>
-    `;
-    productTableBody.innerHTML += tableRow; // append the table row to the products table
-    deleteAllBtn.classList.remove('hide');  // show the delete all button
-    // show number of products on the delete all button
-    deleteAllBtn.value = `Delete All ( ${productData.length} )`;
 }
 
 // remove product from products table (delete all product items)
@@ -174,4 +158,27 @@ function deleteAll() {
     localStorage.productData = ''; // remove all products from local storage
     deleteAllBtn.classList.add('hide');  // hide the delete all button
     productTableBody.innerHTML = '';    // empty the products table
+}
+
+// edit a specific product
+
+function editProduct(productIndex) {
+    // fill input fields with product data from productData array
+    productName.value = productData[productIndex].productName;
+    category.value = productData[productIndex].category;
+    count.value = productData[productIndex].count;
+    price.value = productData[productIndex].price;
+    tax.value = productData[productIndex].tax;
+    ads.value = productData[productIndex].ads;
+    discount.value = productData[productIndex].discount;
+    getTotal(); // get total price of the product and display it
+    mode = 'update';    // change mode to update
+    createBtn.value = 'Update'; // change create button to update button
+    // save the index of product that user wants to update, to access it directly in the productData array
+    savedIndex = productIndex;
+    // scroll smoothly to page top
+    window.scroll({
+        top: 0,
+        behavior: "smooth"
+    });
 }
