@@ -19,6 +19,7 @@ let searchBy = document.getElementById('search-by');
 let productData = [];   // array to hold products
 let mode = 'create';    // initial value of mode (available modes are create and update)
 let savedIndex = 0; // a variable to save products indexes to access them in the productData array
+let displayedIndexes = []; // indexes of products currently shown in products table
 // if local storage already has products ->
 if (localStorage.getItem('productData') != null && localStorage.getItem('productData') != '') {
     // add existing products to the productData array
@@ -139,13 +140,19 @@ function deleteItem(productIndex) {
 // delete all products in the table
 
 function deleteAll() {
-    // ask user for confirmation before deleting all products
-    let ok = window.confirm('Are you sure you want to delete all products?');
-    if (ok) {   // if user confirms -> delete all products
-        productData = [];    // remove all products from the productData array
-        localStorage.productData = ''; // remove all products from local storage
-        deleteAllBtn.classList.add('hide');  // hide the delete all button
-        productTableBody.innerHTML = '';    // empty the products table
+    if (displayedIndexes.length === 0) return; // if no displayed products -> do nothing and exit
+
+    // ask user for confirmation before deleting all displayed products
+    let ok = window.confirm('Are you sure you want to delete all displayed products?');
+    if (ok) {   // if user confirms -> delete all displayed products
+        // Sort indexes in descending order to safely remove them
+        displayedIndexes.sort((a, b) => b - a);
+        // remove each displayed product from the productData array
+        for (let i of displayedIndexes) {
+            productData.splice(i, 1);
+        }
+        localStorage.setItem('productData', JSON.stringify(productData)); // update local storage with the new array
+        searchProducts();   // refresh the products table
     }
 }
 
@@ -172,64 +179,52 @@ function editProduct(productIndex) {
     });
 }
 
-// search products by name or category
+// search products by name or category and display them in the products table
 
 function searchProducts() {
     let table = '';  // a variable to store searched products in a table
     let searchTerm = search.value.toLowerCase(); // get search term and convert it to lowercase
+    displayedIndexes = []; // reset each time we search
     for (let index = 0; index < productData.length; index++) {
-        // if user wants to search by product name ->
-        if (searchBy.value == 'by product') {
-            // if product name contains the search term (case insensitive) ->
-            if (productData[index].productName.toLowerCase().includes(searchTerm)) {
-                // table variable stores a table having product details
-                table += `
-                    <tr>
-                        <td>${index + 1}</td>
-                        <td>${productData[index].productName}</td>
-                        <td>${productData[index].category}</td>
-                        <td>${productData[index].count}</td>
-                        <td>${productData[index].price}</td>
-                        <td>${productData[index].tax}</td>
-                        <td>${productData[index].ads}</td>
-                        <td>${productData[index].discount}</td>
-                        <td>${productData[index].total}</td>
-                        <td><button class="btn btn-primary edit-btn" onclick="editProduct(${index})">Edit</button></td>
-                        <td><button class="btn btn-danger delete-btn" onclick="deleteItem(${index})">Delete Item</button></td>
-                        <td><button class="btn btn-danger delete-btn" onclick="removeProduct(${index})">Remove Product</button></td>
-                    </tr>
-                `;
-            }
-        } else {  // if user wants to search by category ->
-            // if category contains the search term (case insensitive) ->
-            if (productData[index].category.toLowerCase().includes(searchTerm)) {
-                // table variable stores a table having product details
-                table += `
-                    <tr>
-                        <td>${index + 1}</td>
-                        <td>${productData[index].productName}</td>
-                        <td>${productData[index].category}</td>
-                        <td>${productData[index].count}</td>
-                        <td>${productData[index].price}</td>
-                        <td>${productData[index].tax}</td>
-                        <td>${productData[index].ads}</td>
-                        <td>${productData[index].discount}</td>
-                        <td>${productData[index].total}</td>
-                        <td><button class="btn btn-primary edit-btn" onclick="editProduct(${index})">Edit</button></td>
-                        <td><button class="btn btn-danger delete-btn" onclick="deleteItem(${index})">Delete Item</button></td>
-                        <td><button class="btn btn-danger delete-btn" onclick="removeProduct(${index})">Remove Product</button></td>
-                    </tr>
-                `;
-            }
+        let matches = false;    // product does not match search term by default
+        // case user wants to search by product name ->
+        if (searchBy.value === 'by product') {
+            // if product name matches search term -> matches = true
+            if (productData[index].productName.toLowerCase().includes(searchTerm)) matches = true;
+        } else {    // case user wants to search by category ->
+            // if category matches search term -> matches = true
+            if (productData[index].category.toLowerCase().includes(searchTerm)) matches = true;
+        }
+        // if product matches search term ->
+        if (matches) {
+            displayedIndexes.push(index); // record this product index
+            // add this product to the table variable
+            table += `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${productData[index].productName}</td>
+                    <td>${productData[index].category}</td>
+                    <td>${productData[index].count}</td>
+                    <td>${productData[index].price}</td>
+                    <td>${productData[index].tax}</td>
+                    <td>${productData[index].ads}</td>
+                    <td>${productData[index].discount}</td>
+                    <td>${productData[index].total}</td>
+                    <td><button class="btn btn-primary edit-btn" onclick="editProduct(${index})">Edit</button></td>
+                    <td><button class="btn btn-danger delete-btn" onclick="deleteItem(${index})">Delete Item</button></td>
+                    <td><button class="btn btn-danger delete-btn" onclick="removeProduct(${index})">Remove Product</button></td>
+                </tr>
+            `;
         }
     }
+
     productTableBody.innerHTML = table; // display the table in HTML
-    // if there is any products ->
-    if (productData.length > 0) {
+    // if there is any displayed products ->
+    if (displayedIndexes.length > 0) {
         deleteAllBtn.classList.remove('hide');  // show the delete all button
-        // show number of products on the delete all button
-        deleteAllBtn.value = `Delete All ( ${productData.length} )`;
-    } else {    // if no products ->
-        deleteAllBtn.classList.add('hide');  // hide the delete all button
+        // show number of displayed products on the delete all button
+        deleteAllBtn.value = `Delete All ( ${displayedIndexes.length} )`;
+    } else {    // if no displayed products ->
+        deleteAllBtn.classList.add('hide'); // hide the delete all button
     }
 }
