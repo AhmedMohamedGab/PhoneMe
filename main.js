@@ -54,33 +54,39 @@ function getTotal() {
 function createProduct() {
     // object that takes user inputs
     let newProduct = {
-        productName: productName.value,
-        category: category.value,
-        count: count.value,
-        price: price.value,
-        tax: tax.value,
-        ads: ads.value,
-        discount: discount.value,
+        productName: productName.value.trim(),  // trim to remove leading/trailing spaces
+        category: category.value.trim(),    // trim to remove leading/trailing spaces
+        count: Number(count.value), // convert to number to remove leading zeros
+        price: Number(price.value), // convert to number to remove leading zeros
+        tax: Number(tax.value), // convert to number to remove leading zeros
+        ads: Number(ads.value), // convert to number to remove leading zeros
+        discount: Number(discount.value),   // convert to number to remove leading zeros
         total: total.innerHTML
     }
     // if empty tax -> tax = 0
-    if (newProduct.tax == '') {
-        newProduct.tax = 0;
-    }
+    if (newProduct.tax == '') newProduct.tax = 0;
     // if empty ads -> ads = 0
-    if (newProduct.ads == '') {
-        newProduct.ads = 0;
-    }
+    if (newProduct.ads == '') newProduct.ads = 0;
     // if empty discount -> discount = 0
-    if (newProduct.discount == '') {
-        newProduct.discount = 0;
-    }
+    if (newProduct.discount == '') newProduct.discount = 0;
+
     // if valid inputs -> proceed to create or update product
     if (newProduct.productName != '' && newProduct.category != ''
         && newProduct.price != '' && newProduct.price > 0
         && newProduct.total != '0' && newProduct.count > 0
         && newProduct.count <= 100 && newProduct.tax >= 0
         && newProduct.ads >= 0 && newProduct.discount >= 0) {
+
+        // Check for duplicates
+        let duplicate = productData.some((p, i) =>
+            p.productName.trim().toLowerCase() === newProduct.productName.toLowerCase() && (mode === 'create' || i !== savedIndex)
+        );
+        // If duplicate found -> alert user and do not proceed
+        if (duplicate) {
+            alert('❗ Product name already exists!');
+            return;
+        }
+
         // if user in create mode ->
         if (mode === 'create') {
             // add the new product to the productData array (array that holds all products)
@@ -143,7 +149,7 @@ function deleteAll() {
     if (displayedIndexes.length === 0) return; // if no displayed products -> do nothing and exit
 
     // ask user for confirmation before deleting all displayed products
-    let ok = window.confirm('Are you sure you want to delete all displayed products?');
+    let ok = window.confirm('⚠️ Are you sure you want to delete all displayed products?');
     if (ok) {   // if user confirms -> delete all displayed products
         // Sort indexes in descending order to safely remove them
         displayedIndexes.sort((a, b) => b - a);

@@ -8,7 +8,7 @@ PhoneMe is a small, client-side Product Management System (PMS) for a phone stor
 - Live total calculation (price + tax + ads - discount)
 - Edit existing products
 - Incremental removal (delete a single item) and remove whole products
-- Delete all products
+- Delete all displayed products
 - Search by product name or category (live search)
 - Data persisted in Local Storage
 

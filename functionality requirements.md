@@ -10,3 +10,5 @@
 - Update products -> DONE
 - Search products -> DONE
 - Check data integrity -> DONE
+- Check for duplicates -> DONE
+- Adjust user inputs -> DONE
