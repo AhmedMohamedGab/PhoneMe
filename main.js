@@ -48,7 +48,7 @@ function getTotal() {
     }
 }
 
-// create new product
+// create new product or update existing product
 
 function createProduct() {
     // object that takes user inputs
@@ -62,22 +62,39 @@ function createProduct() {
         discount: discount.value,
         total: total.innerHTML
     }
-    // if invalid count -> count = 1
-    if (newProduct.count <= 0) {
-        newProduct.count = 1;
+    // if empty tax -> tax = 0
+    if (newProduct.tax == '') {
+        newProduct.tax = 0;
     }
-    // if user in create mode ->
-    if (mode === 'create') {
-        // add the new product to the productData array (array that holds all products)
-        productData.push(newProduct);
-    } else {
-        // user in update mode ->
-        // replace old product in the productData array with updated product
-        productData[savedIndex] = newProduct;
+    // if empty ads -> ads = 0
+    if (newProduct.ads == '') {
+        newProduct.ads = 0;
     }
-    localStorage.setItem('productData', JSON.stringify(productData));   // copy the productData array to local storage
-    searchProducts();   // refresh the products table
-    clearInputs();  // clear input fields after user clicks the create button
+    // if empty discount -> discount = 0
+    if (newProduct.discount == '') {
+        newProduct.discount = 0;
+    }
+    // if valid inputs -> proceed to create or update product
+    if (newProduct.productName != '' && newProduct.category != ''
+        && newProduct.price != '' && newProduct.price > 0
+        && newProduct.total != '0' && newProduct.count > 0
+        && newProduct.count <= 100 && newProduct.tax >= 0
+        && newProduct.ads >= 0 && newProduct.discount >= 0) {
+        // if user in create mode ->
+        if (mode === 'create') {
+            // add the new product to the productData array (array that holds all products)
+            productData.push(newProduct);
+        } else {
+            // user in update mode ->
+            // replace old product in the productData array with updated product
+            productData[savedIndex] = newProduct;
+        }
+        localStorage.setItem('productData', JSON.stringify(productData));   // copy the productData array to local storage
+        searchProducts();   // refresh the products table
+        clearInputs();  // clear input fields after user clicks the create button
+    } else {    // if invalid inputs -> alert user
+        alert('Please fill in all required fields with valid values.');
+    }
 }
 
 // clear input fields after user clicks the create button
@@ -122,10 +139,14 @@ function deleteItem(productIndex) {
 // delete all products in the table
 
 function deleteAll() {
-    productData = [];    // remove all products from the productData array
-    localStorage.productData = ''; // remove all products from local storage
-    deleteAllBtn.classList.add('hide');  // hide the delete all button
-    productTableBody.innerHTML = '';    // empty the products table
+    // ask user for confirmation before deleting all products
+    let ok = window.confirm('Are you sure you want to delete all products?');
+    if (ok) {   // if user confirms -> delete all products
+        productData = [];    // remove all products from the productData array
+        localStorage.productData = ''; // remove all products from local storage
+        deleteAllBtn.classList.add('hide');  // hide the delete all button
+        productTableBody.innerHTML = '';    // empty the products table
+    }
 }
 
 // edit a specific product

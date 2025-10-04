@@ -9,4 +9,4 @@
 - Delete all products -> DONE
 - Update products -> DONE
 - Search products -> DONE
-- Check data integrity
+- Check data integrity -> DONE
