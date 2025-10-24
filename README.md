@@ -2,6 +2,8 @@
 
 PhoneMe is a small, client-side Product Management System (PMS) for a phone store. It is a static HTML/CSS/JavaScript app that lets you create, edit, search, and remove products. Data is stored in the browser's Local Storage so you can keep your product list between sessions on the same device and browser.
 
+Demo: Open [https://phoneme.netlify.app/] in a modern browser.
+
 ## Features
 
 - Create new product entries (name, category, count, price, tax, ads, discount)
