@@ -207,6 +207,7 @@ main {
   transform: scale(1.1);
   background-color: #407ba7;
 }
+
 .delete-btn:hover {
   transform: scale(1.1);
   background-color: #e63946;
@@ -214,6 +215,7 @@ main {
 
 footer {
   padding: 10px;
+  margin-top: 128px;
   background-color: #407ba7;
   width: 100%;
 }
@@ -228,15 +230,61 @@ footer a {
   color: #1d3557;
 }
 
-@media (max-width: 884px) {
+@media (max-width: 1025px) {
+  header h1 {
+    font-size: 2rem;
+  }
+
+  header h2 {
+    font-size: 1.5rem;
+  }
+
+  main {
+    width: 80%;
+  }
+
+  #create-legend,
+  #search-legend {
+    padding: 16px;
+    font-size: 1.4rem;
+  }
+
   .row {
-    gap: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .col-md {
+    margin-top: 32px;
+  }
+
+  .form-control,
+  #total,
+  .btn,
+  tr,
+  footer {
+    font-size: 1.25rem;
   }
 }
 
 @media (max-width: 768px) {
-  .row {
-    gap: 0;
+  header h1 {
+    font-size: 1.3rem;
+  }
+
+  header h2 {
+    font-size: 1.125rem;
+  }
+
+  main {
+    width: 85%;
+  }
+
+  #create-legend,
+  #search-legend {
+    padding: 16px;
+    font-size: 1rem;
   }
 
   #create-btn:hover,
@@ -245,7 +293,23 @@ footer a {
     transform: scale(1.12, 1.15);
   }
 
+  .col-md {
+    margin-top: 16px;
+  }
+
+  .form-control,
+  #total,
+  .btn,
+  tr {
+    font-size: 0.875rem;
+  }
+
   #search-by {
-    padding: 16px 16px;
+    padding: 16px 4px;
+    font-size: 12px;
+  }
+
+  footer {
+    font-size: 0.75rem;
   }
 }
